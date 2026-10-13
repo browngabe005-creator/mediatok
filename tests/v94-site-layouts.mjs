@@ -24,6 +24,6 @@ test('v94 assets precached and health updated',()=>{
  const sw=read('public/service-worker.js'),worker=read('src/worker.js');
  assert.match(sw,/site-layouts-v94\.js/);
  assert.match(sw,/site-layouts-v94\.css/);
- assert.match(sw,/mediatok-v95/);
- assert.match(worker,/version:"v95"/);
+ assert.match(sw,/mediatok-v96/);
+ assert.match(worker,/version:"v96"/);
 });

@@ -25,5 +25,5 @@ test('Site styles remain local; profile layouts not replaced',()=>{
 test('v95 pre-cache and health version match',()=>{
  const sw=read('public/service-worker.js'),worker=read('src/worker.js');
  assert.match(sw,/passport-v95\.js/);assert.match(sw,/passport-v95\.css/);
- assert.match(sw,/mediatok-v95/);assert.match(worker,/version:"v95"/);
+ assert.match(sw,/mediatok-v96/);assert.match(worker,/version:"v96"/);
 });

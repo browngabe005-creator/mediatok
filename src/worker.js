@@ -1160,7 +1160,7 @@ async function handleAPI(request, env, url, emitCatalogBatch = null) {
   if (url.pathname === "/api/logs" && method === "GET") {
     const userName = url.searchParams.get("user");
     let rows;
-    if (userName) rows = await db.prepare(`SELECT l.*,u.name,u.avc,u.role,(SELECT COUNT(*) FROM log_comments c WHERE c.log_id=l.id) AS comment_count FROM media_logs l JOIN users u ON u.id=l.user_id WHERE u.name=? COLLATE NOCASE ORDER BY l.updated_at DESC LIMIT 100`).bind(userName).all();
+    if (userName) rows = await db.prepare(`SELECT l.*,u.name,u.avc,u.role,(SELECT COUNT(*) FROM log_comments c WHERE c.log_id=l.id) AS comment_count FROM media_logs l JOIN users u ON u.id=l.user_id WHERE u.name=? COLLATE NOCASE ORDER BY l.updated_at DESC, l.id DESC`).bind(userName).all();
     else rows = await db.prepare(`SELECT l.*,u.name,u.avc,u.role,(SELECT COUNT(*) FROM log_comments c WHERE c.log_id=l.id) AS comment_count FROM media_logs l JOIN users u ON u.id=l.user_id ORDER BY l.updated_at DESC LIMIT 40`).all();
     return json((rows.results || []).map(logObject));
   }
@@ -1419,7 +1419,7 @@ export default {
       // Health endpoint is intentionally independent of D1 so deployment/routing can be checked safely.
       if (url.pathname.startsWith("/api/music/v62") || url.pathname.startsWith("/api/music/v63")) return await handleMusicRoute(request,env,ctx,currentUser);
       if (url.pathname === "/api/health" && request.method === "GET") {
-        return json({ ok: true, service: "mediatok-worker", version:"v95", catalogRoute: "/api/search/media", diagnosticsRoute:"/api/search/media/diagnostics", authRoute: "/auth/discord" });
+        return json({ ok: true, service: "mediatok-worker", version:"v96", catalogRoute: "/api/search/media", diagnosticsRoute:"/api/search/media/diagnostics", authRoute: "/auth/discord" });
       }
       // v41 catalog is a separate, maintained search service. Legacy routes remain for compatibility.
       if (url.pathname === '/api/books/browse' || url.pathname === '/api/lightnovels/browse' || url.pathname === '/api/webnovels/browse' || url.pathname.startsWith('/api/search/v41') || url.pathname.startsWith('/api/search/v42') || url.pathname === '/api/search/media' || url.pathname.startsWith('/api/search/media/')) { const response=await catalogRoute(request,env,ctx); if(response)return response; }

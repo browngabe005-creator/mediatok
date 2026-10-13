@@ -7,6 +7,6 @@ for (const feature of ['Original Theme','Anime Theme','Future Theme',"['layout',
 assert(html.includes("if(layout==='anime')return mtAnimeProfilePage"));
 assert(html.includes("if(layout==='future')return mtFutureProfilePage"));
 assert(worker.includes('profileLayout:["original","anime","future"].includes(rawSocials.profileLayout)'));
-assert(worker.includes('version:"v95"'));
-assert(sw.includes('mediatok-v95-layout-settings-2'));
+assert(worker.includes('version:"v96"'));
+assert(sw.includes('mediatok-v96-collection-repair'));
 console.log('Original v89 profile layouts remain present in v95: PASS');

@@ -1,5 +1,5 @@
-const CACHE_NAME = 'mediatok-v95-layout-settings-2';
-const SHELL = ['/lists-v93.css', '/site-skins-v93.css', '/site-layouts-v94.css', '/site-layouts-v94.js', '/passport-v95.js', '/passport-v95.css', '/lists-v93.js', '/site-skins-v93.js', '/mobile-v60.css', '/', '/manifest.webmanifest', '/mt-logo.png', '/icons/icon-192.png', '/icons/icon-512.png'];
+const CACHE_NAME = 'mediatok-v96-collection-repair';
+const SHELL = ['/collection-fixes-v96.css', '/lists-v93.css', '/site-skins-v93.css', '/site-layouts-v94.css', '/site-layouts-v94.js', '/passport-v95.js', '/passport-v95.css', '/lists-v93.js', '/site-skins-v93.js', '/mobile-v60.css', '/', '/manifest.webmanifest', '/mt-logo.png', '/icons/icon-192.png', '/icons/icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
 });
