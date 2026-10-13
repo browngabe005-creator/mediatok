@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const source=readFileSync(new URL('../src/worker.js',import.meta.url),'utf8').replace(/^export \{ ForumLiveRoom \} from '\.\/live-chat\.js';\s*/,'');
+const {default:worker}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+const urls=[];
+const env={DB:{prepare(){return {bind(){return this},async first(){return null},async all(){return {results:[]}}}}}, FORUM_LIVE:{getByName(name){assert.equal(name,'mediatok-forum');return {fetch:async request=>{urls.push([request.url,request.headers.get('X-MT-Chat-User')]);return Response.json({chat:true})}}}},ASSETS:{fetch(){return new Response('app')}}};
+const base='https://mediatok.org';
+let r=await worker.fetch(new Request(base+'/api/forum/live/snapshot'),env);
+assert.equal(r.status,200);assert.equal((await r.json()).chat,true);
+assert.equal(JSON.parse(urls[0][1]).id,'');
+r=await worker.fetch(new Request(base+'/api/forum/live/upload',{method:'POST',headers:{'Content-Type':'image/png'},body:Uint8Array.of(1,2,3)}),env);
+assert.equal(r.status,401);
+r=await worker.fetch(new Request(base+'/api/health'),env);assert.equal((await r.json()).version,'v38');
+console.log('PASS Worker forwards guest snapshots, guards image uploads, and reports v38');

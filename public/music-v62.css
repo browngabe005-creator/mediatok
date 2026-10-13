@@ -1,0 +1,68 @@
+/* MediaTok v62: right-side music section and unified desktop profile rhythm */
+@media (min-width:1021px) {
+ .layout.pf-page { align-items:start!important; padding-top:0!important; }
+ .layout.pf-page>.side { top:56px!important; margin-top:0!important; align-self:start!important; box-sizing:border-box!important; }
+ .layout.pf-page>.main { margin:0!important; align-self:start!important; }
+ .pf.pf-profile-grid.mt-has-current {display:grid!important;grid-template-columns:minmax(0,1fr) minmax(390px,495px)!important;gap:14px!important;align-items:start!important}
+ .pf.pf-profile-grid:not(.mt-has-current){display:grid!important;grid-template-columns:minmax(0,1fr) minmax(220px,270px)!important;gap:14px!important;align-items:start!important}
+ .pf.pf-profile-grid>.pf-center-column{grid-column:1!important;grid-row:1!important;min-width:0!important}
+ .pf.pf-profile-grid>.pf-right-zone{grid-column:2!important;grid-row:1!important;display:grid!important;grid-template-columns:1fr!important;gap:14px!important;min-width:0!important;align-content:start!important}
+ .pf.pf-profile-grid.mt-has-current>.pf-right-zone{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+ .pf.pf-profile-grid .pf-right-zone>.pf-current-rail{grid-column:1!important;grid-row:1!important;position:static!important;top:auto!important;min-width:0!important}
+ .pf.pf-profile-grid .pf-right-zone>.pf-global-rail{grid-column:2!important;grid-row:1!important;position:static!important;top:auto!important;width:100%!important;max-width:none!important;min-width:0!important}
+ .pf.pf-profile-grid:not(.mt-has-current) .pf-right-zone>.pf-global-rail{grid-column:1!important}
+ .pf.pf-profile-grid .pf-right-zone .pf-global-activity{width:100%!important;max-width:none!important;min-width:0!important}
+ .pf.pf-profile-grid .pf-right-zone>.pf-music-rail{grid-column:1/-1!important;grid-row:2!important;min-width:0!important}
+ .pf.pf-profile-grid.mt-has-current .pf-right-zone .pf-current-panel,.pf.pf-profile-grid.mt-has-current .pf-right-zone .pf-global-activity{height:min(78dvh,675px)!important;max-height:min(78dvh,675px)!important;min-height:0!important;box-sizing:border-box!important}
+}
+@media (min-width:1021px) and (max-width:1320px){
+ .pf.pf-profile-grid.mt-has-current{grid-template-columns:minmax(0,1fr) minmax(328px,396px)!important;gap:10px!important}
+ .pf.pf-profile-grid.mt-has-current>.pf-right-zone{gap:10px!important}
+}
+@media (min-width:1021px) and (max-width:1140px){
+ .pf.pf-profile-grid.mt-has-current{grid-template-columns:minmax(0,1fr) minmax(305px,340px)!important}
+}
+@media (max-width:1020px){
+ .pf.pf-profile-grid>.pf-right-zone{display:flex!important;flex-direction:column!important;gap:14px!important;grid-column:1!important;grid-row:auto!important;min-width:0!important}
+ .pf.pf-profile-grid .pf-right-zone>.pf-current-rail,.pf.pf-profile-grid .pf-right-zone>.pf-global-rail,.pf.pf-profile-grid .pf-right-zone>.pf-music-rail{position:static!important;width:100%!important;max-width:none!important;min-width:0!important}
+ .pf.pf-profile-grid .pf-right-zone .pf-global-activity{width:100%!important;max-width:none!important;height:auto!important;max-height:none!important}
+}
+.pf-music-rail{background:var(--surface)!important;color:var(--ink)!important;border:1px solid var(--line);border-radius:13px;padding:15px;box-shadow:none;}
+.mt-music-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 13px}
+.mt-music-head h2{color:var(--ink)!important;font-size:15px;font-weight:750;margin:3px 0 0;line-height:1.35}
+.mt-music-head .eyebrow{color:var(--muted)!important;font-size:10px}
+.mt-music-head .textbtn{display:flex;align-items:center;gap:5px;color:var(--accent)}
+.mt-music-head .ic,.mt-music-track .ic,.mt-music-source .ic{width:15px;height:15px;flex:none}
+.mt-music-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mt-music-track{display:flex;align-items:center;gap:9px;min-width:0;border:1px solid var(--line);border-radius:10px;background:var(--soft);padding:8px;transition:border-color .16s,background .16s;text-decoration:none;color:var(--ink)!important}
+.mt-music-track:not([aria-disabled]):hover{border-color:var(--accent);background:var(--surface)}
+.mt-music-art{position:relative;display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;overflow:hidden;border-radius:7px;background:var(--surface);color:var(--accent)}
+.mt-music-art>.ic{width:23px;height:23px}
+.mt-music-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mt-music-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.mt-music-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--ink)!important;line-height:1.4}
+.mt-music-copy small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--muted)!important}
+.mt-music-track>.ic{width:12px;height:12px;color:var(--muted)}
+.mt-music-empty{grid-column:1/-1;color:var(--muted);font-size:12px;line-height:1.55;padding:10px}
+.mt-music-source{display:inline-flex;align-items:center;gap:4px;margin-top:10px;color:var(--muted);font-size:11px}
+.mt-music-source:hover{color:var(--accent)}
+.mt-music-edit{width:min(92vw,590px);max-width:590px!important;max-height:88dvh;overflow:auto;background:var(--surface);color:var(--ink);padding:22px;border-radius:16px}
+.mt-music-edit .mt-music-head{margin-bottom:10px}
+.mt-music-edit .mt-music-head h2{font-size:21px}
+.mt-music-label{display:block;margin:18px 0 7px;font-size:12px;font-weight:700;color:var(--ink)}
+.mt-music-editrow{display:grid;grid-template-columns:50px 100px minmax(0,1fr);gap:6px;align-items:center;margin:7px 0}
+.mt-music-editrow label{font-size:11px;font-weight:600;color:var(--muted)}
+.mt-music-editrow>.mt-music-songartist{grid-column:3}
+.mt-music-editrow .field,.mt-music-editrow .select{padding:8px;font-size:12px;min-height:36px}
+.mt-music-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+@media(max-width:540px){.mt-music-grid{grid-template-columns:1fr 1fr}.mt-music-track{padding:6px;gap:5px}.mt-music-art{width:34px;height:34px;flex-basis:34px}.mt-music-copy strong{font-size:11px}.mt-music-editrow{grid-template-columns:38px 80px minmax(0,1fr)}.mt-music-edit{padding:14px}}
+@media(prefers-reduced-motion:reduce){.mt-music-track{transition:none}}
+@media(min-width:1021px){
+ /* Match the sidebar card to the two equal-height profile rails. The compact
+    nav avoids a second scrollbar while keeping all actions reachable. */
+ .layout.pf-page>.side{height:min(78dvh,675px)!important;max-height:min(78dvh,675px)!important;min-height:0!important;overflow:auto!important;padding:11px!important;gap:0!important;}
+ .layout.pf-page>.side .side-title{padding:6px 9px!important;font-size:10px!important}
+ .layout.pf-page>.side .side-link{padding:7px 9px!important;margin:0!important;min-height:34px!important;font-size:12px!important;gap:8px!important;line-height:1.3!important}
+ .layout.pf-page>.side .side-link .ico{width:16px!important;flex:0 0 16px!important}
+ .layout.pf-page>.side .mt-side-account{margin-top:auto!important}
+}

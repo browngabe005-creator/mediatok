@@ -1,0 +1,60 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mediatok",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-10-08",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/auth/*",
+      "/api/*"
+    ]
+  },
+  "routes": [
+    {
+      "pattern": "mediatok.org",
+      "zone_name": "mediatok.org",
+      "custom_domain": true,
+      "enabled": true,
+      "previews_enabled": false
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "17 * * * *"
+    ]
+  },
+  "keep_vars": true,
+  "vars": {
+    "AUTH_FROM_EMAIL": "MediaTok <auth@mediatok.org>",
+    "EMAIL_VERIFICATION_REQUIRED": "true",
+    "OWNER_DISCORD_ID": "14655011502028222739",
+    "ADMIN_DISCORD_ID": "REPLACE_WITH_ADMIN_DISCORD_USER_ID"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mediatok",
+      "database_id": "59aa6640-132d-4cf4-9f7f-c4c06034282e",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "FORUM_LIVE",
+        "class_name": "ForumLiveRoom"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v37_forum_live_room_sqlite",
+      "new_sqlite_classes": [
+        "ForumLiveRoom"
+      ]
+    }
+  ]
+}

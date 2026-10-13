@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const source=readFileSync(new URL('../src/worker.js',import.meta.url),'utf8').replace(/^import \{ catalogRoute, pruneCatalogCache \} from '\.\/catalog-v41\.js';\s*/,'').replace(/^export \{ ForumLiveRoom \} from '\.\/live-chat\.js';\s*/,'');
+const {default:worker}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+let queries=[];
+const make=(older=false)=>({DB:{prepare(sql){queries.push(sql);return {async all(){if(older&&sql.includes('u.avatar_url'))throw Error('D1_ERROR: no such column: u.avatar_url');if(sql.includes('non_game_count'))return {results:[{id:1,display_name:'Custom User',profile_avatar:older?'https://discord.com/old.png':'https://images.example.com/custom.png',fallback_avatar:'https://discord.com/old.png',non_game_count:3}]};return {results:[]}}}}}});
+const response=await worker.fetch(new Request('https://mediatok.org/api/leaderboard'),make());
+assert.equal(response.status,200);
+const row=(await response.json())[0];
+assert.equal(row.avatar,'https://images.example.com/custom.png');
+assert.equal(row.avatarFallback,'https://discord.com/old.png');
+assert(queries[0].includes('u.avatar_url'),'leaderboard must read custom profile image from D1');
+queries=[];
+const oldResponse=await worker.fetch(new Request('https://mediatok.org/api/leaderboard'),make(true));
+assert.equal(oldResponse.status,200);
+assert.equal((await oldResponse.json())[0].avatar,'https://discord.com/old.png');
+assert(queries.length>=3,'legacy schema should be retried without avatar_url');
+console.log('PASS v50 leaderboard: custom PFP, Discord fallback, legacy D1 compatibility');

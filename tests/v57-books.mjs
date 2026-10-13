@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {catalogRoute} from '../src/catalog-v41.js';
+const original=globalThis.fetch;
+const requests=[];
+globalThis.fetch=async (url)=>{
+  const u=new URL(url);requests.push(u.toString());
+  if(u.hostname==='openlibrary.org')return new Response(JSON.stringify({numFound:400,docs:[{key:'/works/abc',title:'A Handbook of Theology',author_name:['A Scholarly Author'],cover_i:123,first_publish_year:2000},{key:'/works/def',title:'Dictionary of Christian Doctrine',author_name:['Another Scholar'],cover_i:321,first_publish_year:1980}]}),{headers:{'Content-Type':'application/json'}});
+  if(u.hostname==='www.googleapis.com')return new Response(JSON.stringify({totalItems:100,items:[{id:'theo1',volumeInfo:{title:'Theological Studies',authors:['Dr. Jane'],imageLinks:{thumbnail:'https://books.google.com/test.jpg'},publishedDate:'1998'}}]}),{headers:{'Content-Type':'application/json'}});
+  throw Error('Unexpected '+u);
+};
+const response=await catalogRoute(new Request('https://mediatok.org/api/books/browse?q=theology&offset=60'),{},null);
+assert.equal(response.status,200);
+const body=await response.json();
+assert.ok(body.results.some(x=>x.title==='A Handbook of Theology'));
+assert.ok(body.results.some(x=>x.title==='Theological Studies'));
+assert.equal(body.nextOffset,90);
+assert.ok(requests.some(url=>url.includes('openlibrary.org/search.json?q=theology')&&url.includes('offset=60')));
+assert.ok(requests.some(url=>url.includes('books/v1/volumes?q=theology')&&url.includes('startIndex=60')));
+const count=requests.length;
+await catalogRoute(new Request('https://mediatok.org/api/books/browse?q=theology&offset=60'),{},null);
+assert.equal(requests.length,count,'cached book query avoids repeated provider calls');
+console.log('PASS broad books: subject search, Open Library + Google Books, pagination and cache');
+globalThis.fetch=original;

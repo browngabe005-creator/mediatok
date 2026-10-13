@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
+const worker = fs.readFileSync(new URL('../src/worker.js', import.meta.url), 'utf8');
+const sw = fs.readFileSync(new URL('../public/service-worker.js', import.meta.url), 'utf8');
+for (const feature of ['Original Theme','Anime Theme','Future Theme',"['layout','Layout','layout']",'profileLayout:peLayout','mtAnimeProfilePage','mtFutureProfilePage','mtSkinCompare','profileResetFooter(type,status,shown.length)']) assert(html.includes(feature),feature);
+assert(html.includes("if(layout==='anime')return mtAnimeProfilePage"));
+assert(html.includes("if(layout==='future')return mtFutureProfilePage"));
+assert(worker.includes('profileLayout:["original","anime","future"].includes(rawSocials.profileLayout)'));
+assert(worker.includes('version:"v95"'));
+assert(sw.includes('mediatok-v95-layout-settings-2'));
+console.log('Original v89 profile layouts remain present in v95: PASS');

@@ -1,0 +1,24 @@
+{
+  "name": "mediatok",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "migrations:apply": "wrangler d1 migrations apply mediatok --remote",
+    "mobile:install": "npm install @capacitor/core @capacitor/android @capacitor/ios && npm install -D @capacitor/cli",
+    "mobile:add-android": "npx cap add android",
+    "mobile:add-ios": "npx cap add ios",
+    "mobile:sync": "npx cap sync",
+    "mobile:open-android": "npx cap open android",
+    "mobile:open-ios": "npx cap open ios",
+    "test:catalog": "node tests/catalog-v41.mjs",
+    "test:offline-search": "node tests/v44-offline-search.mjs",
+    "test:v48": "node tests/v48-webnovels.mjs && node tests/leaderboard-story-games-v47.mjs && python tests/leaderboard-sql-v48.py && python tests/browser-v48.py",
+    "webnovels:sync": "node scripts/sync-webnovels.mjs --strict",
+    "predeploy": "node scripts/sync-webnovels.mjs",
+    "test:v49": "node tests/v49-webnovels.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "type": "module"
+}
